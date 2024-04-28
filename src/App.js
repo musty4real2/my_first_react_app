@@ -1,32 +1,58 @@
-import { useState, useEffect } from 'react';
-import './App.css';
+import React from "react";
+import { useEffect, useState } from "react";
 
-// const Person = (props) => {
-//   return (
-//     <>
-//       <h1>Name: {props.name}</h1>
-//       <h2>Last Name: {props.lastName}</h2>
-//       <h2>Age: {props.age}</h2>
-//     </>
-//   )
-// }
+import "./App.css";
+import SearchIcon from "./search.svg";
+import MovieCard from "./MovieCard";
 
-{/* <Person name={'John'} lastName={'Doe'} age={'30'} />
-<Person name='Summer' lastName='Benjamin' age='25' />>
-<Person name='Sadiq' lastName='Maaz' age='22'/> */}
-const App = () => {
-  const [counter, setCounter] = useState(0);
-  useEffect(() => {
-    alert("you've changed the counter to "+ counter);
-  },[counter])
-  return (
-    <div className="App">
-      <button onClick={() => setCounter((prevCount) => prevCount - 1)}>-</button>
-      <h1>{counter}</h1>
-      <button onClick={() => setCounter((prevCount) => prevCount + 1)}>+</button>
 
-    </div>
-  );
+
+// 1f0788ce
+
+const Api_URL="http://www.omdbapi.com/?apikey=1f0788ce";
+
+const movie1={
+    "Title": "Italian Spiderman",
+    "Year": "2007",
+    "imdbID": "tt2705436",
+    "Type": "movie",
+    "Poster": "https://m.media-amazon.com/images/M/MV5BZWQxMjcwNjItZjI0ZC00ZTc4LWIwMzItM2Q0YTZhNzI3NzdlXkEyXkFqcGdeQXVyMTA0MTM5NjI2._V1_SX300.jpg"
 }
+const App = () =>{
+const [movies,setMovies] = useState([]);
+
+    const searchMovies= async (title) => {
+        const response = await fetch(`${Api_URL}&s=${title}`);
+        const data = await response.json();
+
+        // console.log(data.Search);
+        setMovies(data.Search);
+
+    }
+
+    useEffect(() =>{
+        searchMovies('Spiderman');
+    },[])
+    return(
+    <div className="app">
+        <h1>MovieLand</h1>
+        <div className="search">
+            <input placeholder="search for movies" 
+            value="Superman" onChange={() =>{ }}/>
+            <img src={SearchIcon} alt="search" 
+            onClick={() => {}}/>
+        </div>
+
+        {
+            movies?.length > 0 ? (<div className="container">
+            <MovieCard movie1={movies[0]}/>
+        </div> ) : (<div className="empty"> No Movies Found </div>)
+        }
+        
+    </div>
+    
+    );
+}
+
 
 export default App;
