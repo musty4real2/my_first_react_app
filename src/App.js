@@ -31,7 +31,7 @@ const [movies,setMovies] = useState([]);
     }
 
     useEffect(() =>{
-        searchMovies('Spiderman');
+        searchMovies('ice age');
     },[])
     return(
     <div className="app">
@@ -45,7 +45,10 @@ const [movies,setMovies] = useState([]);
 
         {
             movies?.length > 0 ? (<div className="container">
-            <MovieCard movie1={movies[0]}/>
+            {/* <MovieCard movie1={movies[0]}/> */}
+            {movies.map((movie) => (
+                <MovieCard movie={movie}/>
+            ))}
         </div> ) : (<div className="empty"> No Movies Found </div>)
         }
         
